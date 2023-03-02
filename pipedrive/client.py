@@ -76,7 +76,7 @@ class Client:
             "redirect_uri": self.REDIRECT_URI,
         }
         return self._post(
-            self.OAUTH_BASE_URL + "token",
+            f"{self.OAUTH_BASE_URL}token",
             data=data,
             auth=(self.client_id, self.client_secret),
         )
