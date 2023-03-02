@@ -10,19 +10,16 @@ API_KEY = os.getenv("PIPEDRIVE_API_KEY")
 client_id= os.getenv("PIPEDRIVE_client_id")
 client_secret= os.getenv("PIPEDRIVE_client_secret")
 
-
 client = Client(client_id=client_id, client_secret=client_secret)
 client.authorize()
 
 # client = Client(domain="ibhax-sandbox")
 # client.set_api_token(API_KEY)
 
-
 deals = client.deals
 deals.deals_won_lost_last_30_days()
 deals.count_of_new_deals()
 deals.deals_won_lost_values_last_30_days()
-
 
 activities = client.activities
 activities.count_of_call()
@@ -35,6 +32,5 @@ persons.new_contacts_added()
 
 organizations = client.organizations
 organizations.new_organizations_added()
-
 
 print(json.dumps(client.results, indent=2))
