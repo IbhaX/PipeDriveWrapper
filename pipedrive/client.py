@@ -19,15 +19,16 @@ token_file_path = os.path.join(base_dir, "token.json")
 
 class Client:
     BASE_URL = "https://api.pipedrive.com/"
-    OAUTH_BASE_URL = "https://oauth.pipedrive.com/oauth/"
+    OAUTH_BASE_URL = "https://oauth.pipedrive.com/oauth"
     REDIRECT_URI = "https://flask-production-1c3f.up.railway.app/callback?format=plain"
     results = {}
     
-    def __init__(self, client_id=None, client_secret=None, domain=None):
+    def __init__(self, client_id=None, client_secret=None, domain=None, token_expiry=2):
         self.client_id = client_id
         self.client_secret = client_secret
         self.access_token = None
         self.api_token = None
+        self._token_expiry = token_expiry
         self.activities = Activities(self)
         self.deals = Deals(self)
         self.filters = Filters(self)
@@ -49,12 +50,12 @@ class Client:
 
         if not os.path.exists(token_file_path):
             input("Hit enter -> Authorize App -> Copy Code -> paste it in Terminal...")
-            webbrowser.open(f"{self.OAUTH_BASE_URL}authorize?{urlencode(params)}")
+            webbrowser.open(f"{self.OAUTH_BASE_URL}/authorize?{urlencode(params)}")
             code = input("Enter copied code from website: ")
             self.access_token = self.exchange_code(code)["access_token"]
             
             with open(token_file_path, "w") as f:
-                date = datetime.now() + timedelta(hours=2)
+                date = datetime.now() + timedelta(hours=self._token_expiry)
                 validity = datetime.strftime(date, "%Y-%m-%d %H:%M:%S")
                 token = json.dumps({"access_token": self.access_token, "validity": validity})
                 f.write(token)
@@ -76,7 +77,7 @@ class Client:
             "redirect_uri": self.REDIRECT_URI,
         }
         return self._post(
-            f"{self.OAUTH_BASE_URL}token",
+            f"{self.OAUTH_BASE_URL}/token",
             data=data,
             auth=(self.client_id, self.client_secret),
         )
