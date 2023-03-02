@@ -52,7 +52,12 @@ class Activities(object):
         completed = []
         for uid in user_ids:
             params = {"user_id": uid, "done": 1}
+            
+            # returns whether the user has completed any activity
             activity = self.get_all_activities_with_filter(51, params=params)["data"]
+            
+            # if the user has not completed any activity, TypeError may be raised
+            # because data returned in activity will be None
             try:
                 name = activity[0]["owner_name"]
                 task_completed = len(activity)
