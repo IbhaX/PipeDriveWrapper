@@ -49,6 +49,7 @@ class Activities(object):
         params = {"user_id": "0"}
         activities = self.get_all_activities_with_filter(51, params=params)["data"]
         user_ids = list({i["assigned_to_user_id"] for i in activities})
+        total = 0
         
         completed = []
         for uid in user_ids:
@@ -57,11 +58,12 @@ class Activities(object):
             try:
                 name = activity[0]["owner_name"]
                 task_completed = len(activity)
+                total += task_completed
                 data = {"user_id": uid, "name": name, "task_completed": task_completed}
                 completed.append(data)
             except TypeError:
                 continue
             
-        result = {"activities_completed_by_agents": completed}
+        result = {"activities_completed_by_agents": completed, "total_tasks_completed": total}
         self._client.results.update(result)
         return result

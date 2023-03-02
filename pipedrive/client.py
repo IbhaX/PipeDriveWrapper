@@ -105,16 +105,13 @@ class Client:
         return self._request("delete", url, **kwargs)
 
     def _request(self, method, url, headers=None, params=None, **kwargs):
-        _headers = {}
-        _params = {}
+        _headers = headers or {}
+        _params = params or {}
         if self.access_token:
-            _headers["Authorization"] = "Bearer {}".format(self.access_token)
+            _headers["Authorization"] = f"Bearer {self.access_token}"
         if self.api_token:
             _params["api_token"] = self.api_token
-        if headers:
-            _headers.update(headers)
-        if params:
-            _params.update(params)
+
         return self._parse(requests.request(method, url, headers=_headers, params=_params, **kwargs))
 
     def _parse(self, response):
