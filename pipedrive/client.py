@@ -48,8 +48,9 @@ class Client:
             params["state"] = state
 
         if not os.path.exists(token_file_path):
+            input("Hit enter -> Authorize App -> Copy Code -> paste it in Terminal...")
             webbrowser.open(f"{self.OAUTH_BASE_URL}authorize?{urlencode(params)}")
-            code = input("Enter Code: ")
+            code = input("Enter copied code from website: ")
             self.access_token = self.exchange_code(code)["access_token"]
             
             with open(token_file_path, "w") as f:
@@ -64,6 +65,7 @@ class Client:
             if datetime.now() < parse(data["validity"]):
                 self.access_token = data["access_token"]
             else:
+                print("Token Expired... Authorize once again...")
                 os.remove(token_file_path)
                 self.authorize()
          
