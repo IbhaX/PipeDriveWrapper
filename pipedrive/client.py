@@ -69,7 +69,6 @@ class Client:
                 os.remove(token_file_path)
                 self.authorize()
          
-
     def exchange_code(self, code):
         data = {
             "grant_type": "authorization_code",
@@ -81,7 +80,6 @@ class Client:
             data=data,
             auth=(self.client_id, self.client_secret),
         )
-
 
     def set_access_token(self, access_token):
         self.access_token = access_token

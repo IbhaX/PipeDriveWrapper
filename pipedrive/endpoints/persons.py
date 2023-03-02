@@ -3,7 +3,7 @@ class Persons(object):
         self._client = client
 
     def get_person(self, person_id, **kwargs):
-        url = "persons/{}".format(person_id)
+        url = f"persons/{person_id}"
         return self._client._get(self._client.BASE_URL + url, **kwargs)
 
     def get_all_persons(self, params=None, **kwargs):

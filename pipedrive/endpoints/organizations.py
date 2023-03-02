@@ -3,7 +3,7 @@ class Organizations(object):
         self._client = client
 
     def get_organization(self, organization_id, **kwargs):
-        url = "organizations/{}".format(organization_id)
+        url = f"organizations/{organization_id}"
         return self._client._get(self._client.BASE_URL + url, **kwargs)
 
     def get_all_organizations(self, params=None, **kwargs):

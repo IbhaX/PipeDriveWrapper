@@ -1,5 +1,3 @@
-import json
-
 class Activities(object):
     def __init__(self, client):
         self._client = client
