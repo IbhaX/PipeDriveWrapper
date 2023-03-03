@@ -17,6 +17,7 @@ from pipedrive.endpoints.users import Users
 base_dir = os.path.dirname(__file__)
 token_file_path = os.path.join(base_dir, "token.json")
 
+
 class Client:
     BASE_URL = "https://api.pipedrive.com/"
     OAUTH_BASE_URL = "https://oauth.pipedrive.com/oauth"

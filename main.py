@@ -16,21 +16,28 @@ client.authorize()
 # client = Client(domain="ibhax-sandbox")
 # client.set_api_token(API_KEY)
 
-deals = client.deals
-deals.deals_won_lost_last_30_days()
-deals.count_of_new_deals()
-deals.deals_won_lost_values_last_30_days()
 
-activities = client.activities
-activities.count_of_call()
-activities.count_of_email()
-activities.count_of_meeting()
-activities.activities_completed_by_agents()
+def assignments():
+    deals = client.deals
+    deals.deals_won_lost_last_30_days()
+    deals.count_of_new_deals()
+    deals.deals_won_lost_values_last_30_days()
 
-persons = client.persons
-persons.new_contacts_added()
+    activities = client.activities
+    activities.count_of_call()
+    activities.count_of_email()
+    activities.count_of_meeting()
+    activities.activities_completed_by_agents()
 
-organizations = client.organizations
-organizations.new_organizations_added()
+    persons = client.persons
+    persons.new_contacts_added()
 
-print(json.dumps(client.results, indent=2))
+    organizations = client.organizations
+    organizations.new_organizations_added()
+
+    users = client.users
+    users.active_users()
+
+    print(json.dumps(client.results, indent=2))
+
+assignments()

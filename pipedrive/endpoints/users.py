@@ -13,3 +13,13 @@ class Users(object):
     def get_me(self, **kwargs):
         url = "users/me"
         return self._client._get(self._client.BASE_URL + url, **kwargs)
+    ########################################################################
+    
+    def active_users(self):
+        users = self.get_all_users()["data"]
+        
+        active = [{"id": i["id"], "name": i["name"]} for i in users if i["active_flag"]]
+        result = {"active_users": active}
+        self._client.results.update(result)
+        return result 
+        
