@@ -11,8 +11,6 @@ client_id= os.getenv("PIPEDRIVE_client_id")
 client_secret= os.getenv("PIPEDRIVE_client_secret")
 
 
-
-
 def assignments():
     client = Client(client_id=client_id, client_secret=client_secret)
     client.authorize()
